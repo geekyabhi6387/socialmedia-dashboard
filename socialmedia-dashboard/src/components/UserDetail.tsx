@@ -19,20 +19,20 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="border rounded p-4 mt-4 shadow-md bg-white">
-  <h2 className="text-lg font-bold mb-2 text-gray-800">{user.name}</h2> {/* Darker text */}
-  <p className="text-gray-700">{user.email}</p>
+    <div className="border rounded p-4 mt-4 shadow-md bg-gray-900"> {/* Dark background */}
+    <h2 className="text-lg font-bold mb-2 text-gray-100">{user.name}</h2> {/* Light text */}
+    <p className="text-gray-400">{user.email}</p>
 
-  <h3 className="text-md font-semibold mt-4 mb-2 text-gray-800">Posts</h3> {/* Darker text */}
-  <ul>
-    {posts.map((post) => (
-      <li key={post.id} className="border rounded p-2 mb-2 shadow-sm bg-gray-50 hover:bg-gray-100">
-        <h4 className="font-semibold text-gray-800">{post.title}</h4> {/* Darker text */}
-        <p className="text-gray-700">{post.body.slice(0, 100)}...</p>
-      </li>
-    ))}
-  </ul>
-</div>
+    <h3 className="text-md font-semibold mt-4 mb-2 text-gray-100">Posts</h3> {/* Light text */}
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id} className="border rounded p-2 mb-2 shadow-sm bg-gray-800 hover:bg-gray-700"> {/* Slightly lighter background for posts */}
+          <h4 className="font-semibold text-gray-100">{post.title}</h4> {/* Light text */}
+          <p className="text-gray-400">{post.body.slice(0, 100)}...</p> {/* Light text */}
+        </li>
+      ))}
+    </ul>
+  </div>
   );
 };
 
