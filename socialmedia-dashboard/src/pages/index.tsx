@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[] | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // State for selected user
 
   useEffect(() => {
