@@ -1,0 +1,40 @@
+// src/components/UserDetail.tsx
+import React, { useState, useEffect } from 'react';
+import { User, Post } from '../types';
+
+interface UserDetailProps {
+  user: User;
+}
+
+const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`);
+      const data: Post[] = await res.json();
+      setPosts(data);
+    }
+    fetchPosts();
+  }, [user]);
+
+  return (
+    <div className="border rounded p-4 mt-4">
+      <h2 className="text-lg font-bold mb-2">{user.name}</h2>
+      <p>{user.email}</p>
+      {/* Add other user details as needed */}
+
+      <h3 className="text-md font-semibold mt-4 mb-2">Posts</h3>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id} className="border rounded p-2 mb-2">
+            <h4 className="font-semibold">{post.title}</h4>
+            <p>{post.body.slice(0, 100)}...</p> {/* Display a snippet */}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default UserDetail;
