@@ -18,7 +18,7 @@ const UserList: React.FC<UserListProps> = ({ users, onSelectUser }) => {
           className="cursor-pointer hover:bg-gray-700 p-2 rounded border-b border-gray-700 last:border-b-0 text-gray-300" /* Light text */
           onClick={() => onSelectUser(user)}
         >
-          {user.name}
+          {user.username}
         </li>
       ))}
     </ul>
