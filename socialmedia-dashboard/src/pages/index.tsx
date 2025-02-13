@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import { useState, useEffect } from 'react';
 import UserList from '../components/UserList'; 
+import UserDetail from '../components/UserDetail';
 import { User } from '../types';
 
 const geistSans = Geist({
@@ -30,7 +31,8 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      <UserList users={users} onSelectUser={setSelectedUser} /> {/* Pass the users and the handler */}
+      <UserList users={users} onSelectUser={setSelectedUser} />
+      {selectedUser && <UserDetail user={selectedUser} />} {/* Pass selectedUser here! */}
     </div>
   );
 }
