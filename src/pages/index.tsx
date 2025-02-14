@@ -1,19 +1,7 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
 import { useState, useEffect } from 'react';
 import UserList from '../components/UserList'; 
 import UserDetail from '../components/UserDetail';
 import { User } from '../types';
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export default function Home() {
   const [users, setUsers] = useState<User[] | null>(null);
