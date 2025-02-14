@@ -19,6 +19,7 @@ export default function Home() {
   const [users, setUsers] = useState<User[] | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [usersError, setUsersError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     async function fetchUsers() {
@@ -39,11 +40,31 @@ export default function Home() {
     fetchUsers();
   }, []);
 
+  const filteredUsers = users?.filter(user =>
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+  ) || [];
+
   return (
-    <div className="container mx-auto p-4">
-      {usersError && <p className="text-red-500">{usersError}</p>} {/* Display error message */}
-      <UserList users={users || []} onSelectUser={setSelectedUser} />
+    <div className="flex h-screen bg-gray-900">
+    <aside className="w-64 bg-gray-800 p-4 overflow-y-auto h-screen"> {/* Fixed height for sidebar */}
+      <input
+        type="text"
+        placeholder="Search users..."
+        className="w-full bg-gray-700 text-white rounded p-2 mb-4"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+      {usersError && <p className="text-red-500">{usersError}</p>}
+      <UserList users={filteredUsers} onSelectUser={setSelectedUser} />
+    </aside>
+    <main className="flex-1 p-6 bg-gray-900 overflow-y-auto flex-col h-screen"> {/* Scrollable main content */}
+    {!selectedUser && ( // Conditional rendering for placeholder
+        <div className="flex items-center justify-center h-full"> {/* Center the message */}
+          <p className="text-gray-400 text-lg">Select a user to view details.</p>
+        </div>
+      )}
       {selectedUser && <UserDetail user={selectedUser} />}
-    </div>
+    </main>
+  </div>
   );
 }
