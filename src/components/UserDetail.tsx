@@ -9,6 +9,12 @@ interface UserDetailProps {
 const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
   const [posts, setPosts] = useState<Post[] | null>(null); // Allow posts to be null
   const [postsError, setPostsError] = useState<string | null>(null);
+  const [postSearchTerm, setPostSearchTerm] = useState(''); // New state for post search
+
+  const filteredPosts = posts?.filter(post =>
+    post.title.toLowerCase().includes(postSearchTerm.toLowerCase()) ||
+    post.body.toLowerCase().includes(postSearchTerm.toLowerCase())
+  ) || [];
 
   useEffect(() => {
     async function fetchPosts() {
@@ -41,13 +47,24 @@ const UserDetail: React.FC<UserDetailProps> = ({ user }) => {
   }
 
   return (
-    <div className="border rounded p-4 mt-4 shadow-md bg-gray-900">
-      <h2 className="text-lg font-bold mb-2 text-gray-100">{user.username}</h2>
-      <p className="text-gray-400">{user.email}</p>
+    <div className="border rounded p-4 mt-4 shadow-md bg-gray-900 w-full"> {/* w-full added here */}
+      <h2 className="text-lg font-bold mb-2 text-gray-100">{user.username}</h2> {/* User details here */}
+      <p className="text-gray-400">{user.email}</p> {/* User details here */}
+
       <h3 className="text-md font-semibold mt-4 mb-2 text-gray-100">Posts</h3>
+      <input
+        type="text"
+        placeholder="Search posts..."
+        className="w-full bg-gray-700 text-white rounded p-2 mb-4"
+        value={postSearchTerm}
+        onChange={e => setPostSearchTerm(e.target.value)}
+      />
       <ul>
-        {posts.map((post) => (
-          <li key={post.id} className="border rounded p-2 mb-2 shadow-sm bg-gray-800 hover:bg-gray-700">
+        {filteredPosts.map((post) => (
+          <li
+            key={post.id}
+            className="border rounded p-2 mb-2 shadow-sm bg-gray-800 hover:bg-gray-700 transition duration-300"
+          >
             <h4 className="font-semibold text-gray-100">{post.title}</h4>
             <p className="text-gray-400">{post.body.slice(0, 100)}...</p>
           </li>
